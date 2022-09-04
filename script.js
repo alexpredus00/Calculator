@@ -29,16 +29,16 @@ let secondOperation = 0;
 let secondPeriod = 0;
 let operationCheck = ['+', '-', 'x', '/']; 
 let result = '';
+let history = document.getElementById('lastOperationText');
+
 
 function updateScreen(number){
-
+    setFont();
     if(previousNumber == '' && (number >= 0 && number <= 9) && !(previousNumber == '+' || previousNumber == '-' || previousNumber == 'x' || previousNumber == '/') && !(previousNumber === 0)){
         currentOperation.innerHTML += '' + number;
         previousNumber = number;
     } else if((number >= 0 && number <= 9)){ 
-        if(secondPeriod == 1 && (previousNumber >= 0 && previousNumber <= 9)){
-            
-        } else {
+        if(!(secondPeriod == 1 && (previousNumber >= 0 && previousNumber <= 9))){ 
             currentOperation.innerHTML += "" + number;
             previousNumber = number;
         }
@@ -55,6 +55,7 @@ function updateScreen(number){
             for(let i = 0; i < 4; i++){
                 if(currentOperation.innerHTML.indexOf(operationCheck[i]) != -1){
                     result = currentOperation.innerHTML.split(operationCheck[i]);
+                    history.innerHTML = currentOperation.innerHTML
                     if(operationCheck[i] == '+'){
                         if(result[0].indexOf('.') != -1 || result[1].indexOf('.') != -1){
                             result = parseFloat(result[0]) + parseFloat(result[1]);
@@ -84,14 +85,19 @@ function updateScreen(number){
                         }
                 
                     }
-                currentOperation.innerHTML = result.toFixed(1);
-                previousNumber = result.toFixed(1).toString().slice(-1);
+
+                if(result.toString().indexOf('.') != -1){
+                    result = result.toFixed(1);
+                }
+                currentOperation.innerHTML = result;
+                previousNumber = result.toString().slice(-1);
                 secondOperation = 0;
                 if(result.toString().indexOf('.') != -1){
                     secondPeriod = 1;
                 } else {
                     secondPeriod = 0;
-                }
+                    }
+                setFont();
                 }
             }
         }
@@ -107,17 +113,25 @@ function updateScreen(number){
         secondOperation = 0;
         secondPeriod = 0;
     } else if(number == "D"){
-        if(previousNumber == '+' || previousNumber == '-' || previousNumber == 'x' || previousNumber == '/'){
+        if((previousNumber == '+' || previousNumber == '-' || previousNumber == 'x' || previousNumber == '/') || currentOperation.innerHTML.slice(0.-1) == ' '){
             currentOperation.innerHTML = currentOperation.innerHTML.slice(0, -5);
             previousNumber = currentOperation.innerHTML.slice(-1);
-            console.log(currentOperation.innerHTML);
             secondOperation = 0;
-            secondPeriod = 0;
+            if(currentOperation.innerHTML.toString().indexOf('.') != -1){
+                secondPeriod = 1;
+            } else {
+                secondPeriod = 0;
+            }
+            
         } else {
             currentOperation.innerHTML = currentOperation.innerHTML.slice(0, -1);
             previousNumber = currentOperation.innerHTML.slice(-1);
             secondOperation = 0;
-            secondPeriod = 0;
+            if(currentOperation.innerHTML.indexOf('.') != -1){
+                secondPeriod = 1;
+            } else {
+                secondPeriod = 0;
+            }
         }
     }
 }
@@ -138,3 +152,13 @@ for(let i = 0; i < 8; i++){
 operationPeriod.addEventListener('click', function() {
     updateScreen('.')
 })
+
+function setFont(){
+    if(currentOperation.innerHTML.length < 14){
+        currentOperation.style.fontSize = "50px";
+    } else if(currentOperation.innerHTML.length < 24){
+        currentOperation.style.fontSize = "30px";
+    } else {
+        currentOperation.style.fontSize = "20px";
+    }
+}

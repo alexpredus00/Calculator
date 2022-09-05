@@ -154,11 +154,56 @@ operationPeriod.addEventListener('click', function() {
 })
 
 function setFont(){
+
     if(currentOperation.innerHTML.length < 14){
         currentOperation.style.fontSize = "50px";
-    } else if(currentOperation.innerHTML.length < 24){
+    } else if(currentOperation.innerHTML.length < 27){
         currentOperation.style.fontSize = "30px";
     } else {
         currentOperation.style.fontSize = "20px";
     }
 }
+
+
+document.addEventListener('keydown', (event) => {
+    var name = event.key;
+    var code = event.code;
+    
+    if (code == 'Digit0') {
+      updateScreen(0);
+    } else if (code == 'Digit1') {
+        updateScreen(1);
+    } else if (code == 'Digit2') {
+        updateScreen(2);
+    } else if (code == 'Digit3') {
+        updateScreen(3);
+    } else if (code == 'Digit4') {
+        updateScreen(4);
+    } else if (code == 'Digit5') {
+        updateScreen(5);
+    } else if (code == 'Digit6') {
+        updateScreen(6);
+    } else if (code == 'Digit7') {
+        updateScreen(7);
+    } else if (code == 'Digit8') {
+        updateScreen(8);
+    } else if (code == 'Digit9') {
+        updateScreen(9);
+    } else if (code == 'Enter') {
+        updateScreen('E');
+    } else if (code == 'KeyC') {
+        updateScreen('C');
+    } else if (code == 'Backspace') {
+        updateScreen('D');
+    } else if (code == 'Period') {
+        updateScreen('.');
+    } else if (code == 'Equal' && event.shiftKey == true) {
+        updateScreen('+');
+    } else if (code == 'Minus') {
+        updateScreen('-');
+    } else if (code == 'KeyX') {
+        updateScreen('x');
+    } else if (code == 'Slash') {
+        updateScreen('/');
+    } 
+});

@@ -1,10 +1,10 @@
 .calculator{
-    margin-top: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
+    scale: 0.7;
 }
 
 .buttonGrid{
